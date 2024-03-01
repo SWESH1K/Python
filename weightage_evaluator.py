@@ -1,13 +1,22 @@
+# -----------------------Marks to Weightage Converter--------------------------
+
+class InvalidMarksException(Exception):
+    "Raised when invalid range is entered"
+    def __init__(self,message="Entered data is not in a valid range"):
+        self.message = message
+        super().__init__(self.message)
+
+
 # Function for getting input for Components that require only one input.
 def getMarksInvidual(type,max_marks,max_weightage):
     try:
-        marks = int(input(f"Please enter the {type} marks: (0 if not attempted, Max:{max_marks}): "))
-        if(marks>max_marks or marks<0): print(1/0)
+        marks = float(input(f"Please enter the {type} marks: (0 if not attempted, Max:{max_marks}): ").strip())
+        if(marks>max_marks or marks<0): raise InvalidMarksException()
         marks = marks*(max_weightage/max_marks)
         return round(marks,3)
-    except Exception as error:
+    except:
         print("Please enter the valid number:")
-        exit()
+        getMarksInvidual(type,max_marks,max_weightage)
 
 # Function for getting input for Components that require multiple inputs.
 def getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start=1):
@@ -15,13 +24,13 @@ def getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start=1)
     try:
         totalMarks = 0
         for i in range(start,num_of_co+1):
-            marks = eval(input(f"Co:{i} "))
-            if(marks>maxMarks_per_co or marks<0): print(1/0)
+            marks = float(input(f"Co:{i} ").strip())
+            if(marks>maxMarks_per_co or marks<0): raise InvalidMarksException()
             totalMarks+=marks*(maxWeightage_per_co/maxMarks_per_co)
         return round(totalMarks,3)
     except:
         print("Please enter the valid number:")
-        exit()
+        getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start)
 
 # Class for Marks Analyser
 class MarksAnalyzer:
@@ -90,7 +99,9 @@ class MarksAnalyzer:
         print("Skill End-Sem Weightage:",self.marks[0])
         print("Lab End-Sem: Weightage:",self.marks[1])
         print("End-Sem Weightage:",self.marks[2])
-        totalMarks = self.marks[0]+self.marks[1]+self.marks[2]
+        totalMarks=0
+        for i in range(0,3):
+            totalMarks += self.marks[i]
         print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
 
     def InSemesterFormativeMarks(self):
@@ -101,7 +112,9 @@ class MarksAnalyzer:
         print("Home-Assignment Weightage:",self.marks[6])
         print("Continuous Evalutation Lab Weightage:",self.marks[7])
 
-        totalMarks = self.marks[3]+self.marks[4]+self.marks[5]+self.marks[6]+self.marks[7]
+        totalMarks=0
+        for i in range(3,8):
+            totalMarks += self.marks[i]
         print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
 
     def InSemesterSummativeMarks(self):
@@ -111,7 +124,9 @@ class MarksAnalyzer:
         print("Lab In-Sem Weightage:",self.marks[10])
         print("Skill In-Sem Weightage:",self.marks[11])
 
-        totalMarks = self.marks[8]+self.marks[9]+self.marks[10]+self.marks[11]
+        totalMarks=0
+        for i in range(8,12):
+            totalMarks += self.marks[i]
         print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
 
     def printTotalMarks(self):
