@@ -1,28 +1,29 @@
-import math
-
+# Function for getting input for Components that require only one input.
 def getMarksInvidual(type,max_marks,max_weightage):
-    print(f"Please enter the {type} marks: (0 if not attempted, Max:{max_marks})")
     try:
-        marks = int(input())
+        marks = int(input(f"Please enter the {type} marks: (0 if not attempted, Max:{max_marks}): "))
+        if(marks>max_marks or marks<0): print(1/0)
         marks = marks*(max_weightage/max_marks)
-        return marks
+        return round(marks,3)
     except Exception as error:
         print("Please enter the valid number:")
-        print(error)
         exit()
 
+# Function for getting input for Components that require multiple inputs.
 def getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start=1):
     print(f"Please enter the {type} marks: (0 if not attempted, Max:{maxMarks_per_co} per CO!)")
     try:
         totalMarks = 0
         for i in range(start,num_of_co+1):
             marks = eval(input(f"Co:{i} "))
+            if(marks>maxMarks_per_co or marks<0): print(1/0)
             totalMarks+=marks*(maxWeightage_per_co/maxMarks_per_co)
-        return totalMarks
+        return round(totalMarks,3)
     except:
         print("Please enter the valid number:")
         exit()
 
+# Class for Marks Analyser
 class MarksAnalyzer:
     def __init__(self,name,rollNo):
         self.name = name
@@ -63,8 +64,25 @@ class MarksAnalyzer:
         ## Continuous-Evaluation-Lab-Exercise
         x=getMarksInvidual("Continuous-Evaluation-Lab-Exercise",50,5)
         self.marks.append(x)
+
+        ## Semister-InExam1
+        x=getMarksMultiple("InSem-1",25,6,2)
+        self.marks.append(x)
+
+        ## Semister-InExam2
+        x=getMarksMultiple("InSem-2",25,6,4,3)
+        self.marks.append(x)
+
+        ## Lab In-Semsister
+        x=getMarksInvidual("Lab-InSem",50,6)
+        self.marks.append(x)
+
+        ## Lab In-Semsister
+        x=getMarksInvidual("Skill-InSem",50,6)
+        self.marks.append(x)
         
-    def printEndSemesterSummativeMarks(self):
+        
+    def EndSemesterSummativeMarks(self):
         print("----Marks Analysis----")
         print("Name=",self.name)
         print("Roll No=",self.rollNo)
@@ -86,9 +104,22 @@ class MarksAnalyzer:
         totalMarks = self.marks[3]+self.marks[4]+self.marks[5]+self.marks[6]+self.marks[7]
         print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
 
+    def InSemesterSummativeMarks(self):
+        print("-----------------------")
+        print("In-Sem 1 Weightage:",self.marks[8])
+        print("In-Sem 2 Weightage:",self.marks[9])
+        print("Lab In-Sem Weightage:",self.marks[10])
+        print("Skill In-Sem Weightage:",self.marks[11])
+
+        totalMarks = self.marks[8]+self.marks[9]+self.marks[10]+self.marks[11]
+        print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
+
     def printTotalMarks(self):
-        self.printEndSemesterSummativeMarks()
+        self.EndSemesterSummativeMarks()
         self.InSemesterFormativeMarks()
+        self.InSemesterSummativeMarks()
+        print("---------------------------")
+        print(f"Total Marks = {sum(self.marks)}/100")
 
 if __name__ == '__main__':
     student = MarksAnalyzer("Sweshik",2310080053)
