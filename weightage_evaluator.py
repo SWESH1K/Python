@@ -48,7 +48,7 @@ class MarksAnalyzer:
         ## Lab-End-Exam
         x=getMarksInvidual("Lab-End-Exam",50,8)
         self.marks.append(x)
-        
+
         ## End-Exam
         x=getMarksMultiple("End-Exam",25,6,4)
         self.marks.append(x)
@@ -89,8 +89,9 @@ class MarksAnalyzer:
         ## Lab In-Semsister
         x=getMarksInvidual("Skill-InSem",50,6)
         self.marks.append(x)
-        
-        
+
+
+    
     def EndSemesterSummativeMarks(self):
         print("----Marks Analysis----")
         print("Name=",self.name)
@@ -99,9 +100,7 @@ class MarksAnalyzer:
         print("Skill End-Sem Weightage:",self.marks[0])
         print("Lab End-Sem: Weightage:",self.marks[1])
         print("End-Sem Weightage:",self.marks[2])
-        totalMarks=0
-        for i in range(0,3):
-            totalMarks += self.marks[i]
+        totalMarks = sum(mark for mark in self.marks[:3] if mark is not None)
         print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
 
     def InSemesterFormativeMarks(self):
@@ -112,10 +111,8 @@ class MarksAnalyzer:
         print("Home-Assignment Weightage:",self.marks[6])
         print("Continuous Evalutation Lab Weightage:",self.marks[7])
 
-        totalMarks=0
-        for i in range(3,8):
-            totalMarks += self.marks[i]
-        print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
+        totalMarks = sum(mark for mark in self.marks[3:8] if mark is not None)
+        print("Total marks in In-Semester-Formative Evaluation:",totalMarks)
 
     def InSemesterSummativeMarks(self):
         print("-----------------------")
@@ -124,17 +121,17 @@ class MarksAnalyzer:
         print("Lab In-Sem Weightage:",self.marks[10])
         print("Skill In-Sem Weightage:",self.marks[11])
 
-        totalMarks=0
-        for i in range(8,12):
-            totalMarks += self.marks[i]
-        print("Total marks in End-Semester-Summative Evaluation:",totalMarks)
+        totalMarks = sum(mark for mark in self.marks[8:] if mark is not None)
+        print("Total marks in In-Semester-Summative Evaluation:",totalMarks)
 
     def printTotalMarks(self):
         self.EndSemesterSummativeMarks()
         self.InSemesterFormativeMarks()
         self.InSemesterSummativeMarks()
         print("---------------------------")
-        print(f"Total Marks = {sum(self.marks)}/100")
+        totalMarks = sum(mark for mark in self.marks if mark is not None)
+        print(f"Total Marks = {totalMarks}/100")
+
 
 if __name__ == '__main__':
     student = MarksAnalyzer("Sweshik",2310080053)
