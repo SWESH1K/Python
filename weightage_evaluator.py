@@ -1,5 +1,29 @@
 # -----------------------Marks to Weightage Converter--------------------------
 
+# Function to get maximum marks and weightage from user.
+def getMinMax(type):
+    List = list(map(eval, input(f"Please enter the Maximum weightage and Maximum marks for {type}: ").split()))
+    if len(List) != 2:
+        print("Please enter the valid input!")
+        return getMinMax(type)
+    return sorted(List, reverse=True)
+
+# Getting Maximum Marks and Weightage for all Components.
+SkillEndSem = getMinMax("SkillEndSem")
+EndSem = getMinMax("EndSem")
+LabEndSem = getMinMax("LabEndSem")
+GlobalPlatforms = getMinMax("GlobalPlatforms")
+SkillingContinuos = getMinMax("SkillingContinuos")
+Alm = getMinMax("Alm")
+HomeAssigment = getMinMax("HomeAssigment")
+LabContinuousEvalutation = getMinMax("LabContinuousEvalutation")
+Insem1= getMinMax("Insem1")
+Insem2 = getMinMax("Insem2")
+LabInSem = getMinMax("LabInSem")
+SkillInSem = getMinMax("SkillInSem")
+
+
+
 class InvalidMarksException(Exception):
     "Raised when invalid range is entered"
     def __init__(self,message="Entered data is not in a valid range"):
@@ -16,7 +40,7 @@ def getMarksInvidual(type,max_marks,max_weightage):
         return round(marks,3)
     except:
         print("Please enter the valid number:")
-        getMarksInvidual(type,max_marks,max_weightage)
+        return getMarksInvidual(type,max_marks,max_weightage)
 
 # Function for getting input for Components that require multiple inputs.
 def getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start=1):
@@ -30,7 +54,7 @@ def getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start=1)
         return round(totalMarks,3)
     except:
         print("Please enter the valid number:")
-        getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start)
+        return getMarksMultiple(type,maxMarks_per_co,maxWeightage_per_co,num_of_co,start)
 
 # Class for Marks Analyser
 class MarksAnalyzer:
@@ -42,52 +66,52 @@ class MarksAnalyzer:
     def get_marks(self):
 
         ## Skill-End-Exam
-        x=getMarksInvidual("Skill-End-Exam",50,8)
+        x=getMarksInvidual("Skill-End-Exam",max(SkillEndSem),min(SkillEndSem))
         self.marks.append(x)
 
         ## Lab-End-Exam
-        x=getMarksInvidual("Lab-End-Exam",50,8)
+        x=getMarksInvidual("Lab-End-Exam",max(LabEndSem),min(LabEndSem))
         self.marks.append(x)
 
         ## End-Exam
-        x=getMarksMultiple("End-Exam",25,6,4)
+        x=getMarksMultiple("End-Exam",max(EndSem)/4,min(EndSem)/4,4)
         self.marks.append(x)
 
 
         ## Global Platforms
-        x=getMarksInvidual("Global-Platform",50,2)
+        x=getMarksInvidual("Global-Platform",max(GlobalPlatforms),min(GlobalPlatforms))
         self.marks.append(x)
 
         ## Skilling-Continuous-Evaluation
-        x=getMarksInvidual("Skilling-Continuous-Evalutation",50,5)
+        x=getMarksInvidual("Skilling-Continuous-Evalutation",max(SkillingContinuos),min(SkillingContinuos))
         self.marks.append(x)
 
         ## ALM
-        x=getMarksMultiple("ALM",12.5,2,4)
+        x=getMarksMultiple("ALM",max(Alm)/4,min(Alm)/4,4)
         self.marks.append(x)
 
         ## Home-Assignment
-        x=getMarksMultiple("Home-Assignment",12.5,1,4)
+        x=getMarksMultiple("Home-Assignment",max(HomeAssigment)/4,min(HomeAssigment)/4,4)
         self.marks.append(x)
 
         ## Continuous-Evaluation-Lab-Exercise
-        x=getMarksInvidual("Continuous-Evaluation-Lab-Exercise",50,5)
+        x=getMarksInvidual("Continuous-Evaluation-Lab-Exercise",max(LabContinuousEvalutation),min(LabContinuousEvalutation))
         self.marks.append(x)
 
         ## Semister-InExam1
-        x=getMarksMultiple("InSem-1",25,6,2)
+        x=getMarksMultiple("InSem-1",max(Insem1)/2,min(Insem1)/2,2)
         self.marks.append(x)
 
         ## Semister-InExam2
-        x=getMarksMultiple("InSem-2",25,6,4,3)
+        x=getMarksMultiple("InSem-2",max(Insem2)/2,min(Insem2)/2,4,3)
         self.marks.append(x)
 
         ## Lab In-Semsister
-        x=getMarksInvidual("Lab-InSem",50,6)
+        x=getMarksInvidual("Lab-InSem",max(LabInSem),min(LabInSem))
         self.marks.append(x)
 
-        ## Lab In-Semsister
-        x=getMarksInvidual("Skill-InSem",50,6)
+        ## Skill In-Semsister
+        x=getMarksInvidual("Skill-InSem",max(SkillInSem),min(SkillInSem))
         self.marks.append(x)
 
 
