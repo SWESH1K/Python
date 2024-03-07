@@ -53,13 +53,13 @@ def takeInputOne():
 def getOperation():
     try:
         op = int(input("Please select the operation by entering the index: "))
-        if op not in range(1,9):
+        if op not in range(1,10):
             print("Please enter the valid index (Index not in range)")
             getOperation()
         return op
     except:
         print("Please enter a number!")
-        getOperation()
+        return getOperation()
 
 class MatrixOperator:
     
@@ -128,7 +128,7 @@ class MatrixOperator:
 
 
 def main():
-    operations = ["Addition","Subraction","Multiplication","Division","Transpose","Inverse","Determinant","Rank"]
+    operations = ["Addition","Subraction","Multiplication","Division","Transpose","Inverse","Determinant","Rank","Eigen Values"]
     for i,op in enumerate(operations):
         print(f"{i+1},{op}",end=" | ")
     print()
