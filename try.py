@@ -1,30 +1,39 @@
-#                      ~:~ CODECHEF-sweshikreddy ~:~
-# --> Copying code? Ctrl+C might work, but karma will undo it. <--
-# --> So Better understand my approach and write it on your own! <--
+import hashlib
 
-def min_operations(S):
-    count = {}
-    max_segment = 1
-    operations = 0
-    
-    for char in S:
-        if char in count:
-            count[char] += 1
-        else:
-            count[char] = 1
-        
-        if char == S[max_segment - 1]:
-            max_segment += 1
-        else:
-            max_segment = 1
-    
-    for char, count in count.items():
-        if count > 1:
-            operations += (count - 1) * (max_segment - 1) + 1
-    
-    return operations
+# Dummy database of users (replace this with a real database)
+users = {
+    'Sweshik': {
+        'password': '2206',  # Password should be hashed in real scenarios
+        'balance': 1000
+    },
+    'user2': {
+        'password': 'password2',
+        'balance': 2000
+    }
+}
 
-for _ in range(int(input())):
-    # Fine here's my logic
-    s = input()
-    print(min_operations(s))
+def hash_password(password):
+    """
+    Hashes the given password using SHA-256 algorithm.
+    """
+    return hashlib.sha256(password.encode()).hexdigest()
+
+def authenticate(username, password):
+    """
+    Authenticates the user with the given username and password.
+    Returns True if authentication succeeds, False otherwise.
+    """
+    if username in users and users[username]['password'] == password:
+        return True
+    else:
+        return False
+
+# Example usage:
+username = input("Enter your username: ")
+password = input("Enter your password: ")
+
+if authenticate(username, password):
+    print("Authentication successful!")
+    # Proceed with further operations
+else:
+    print("Authentication failed. Please check your username and password.")

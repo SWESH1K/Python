@@ -1,3 +1,6 @@
+
+# Matrix Calculator --> made by Sweshik Reddy-2310080053.
+
 import numpy as np
 
 def printMatrix(matrix):
@@ -37,7 +40,7 @@ def takeInputTwo():
 
 def takeInputOne():
     try:
-        # Take user input for the dimensions of the matrice
+        # Take user input for the dimensions of the matrix
         rows = int(input("Enter the number of rows for matrix: "))
         cols = int(input("Enter the number of columns for matrix: "))
 
@@ -55,7 +58,7 @@ def getOperation():
         op = int(input("Please select the operation by entering the index: "))
         if op not in range(1,10):
             print("Please enter the valid index (Index not in range)")
-            getOperation()
+            return getOperation()
         return op
     except:
         print("Please enter a number!")
@@ -69,38 +72,58 @@ class MatrixOperator:
 
     def addition(self):
         resultant = np.add(self.matrix1,self.matrix2)
-        print("SUM:")
+        print("\nArray:1")
+        printMatrix(self.matrix1)
+        print("\nArray:2")
+        printMatrix(self.matrix2)
+        print("\nSUM:")
         printMatrix(resultant)
         return resultant
 
     def subraction(self):
         resultant = np.subtract(self.matrix1,self.matrix2)
-        print("SUBRACTION:")
+        print("\nArray:1")
+        printMatrix(self.matrix1)
+        print("\nArray:2")
+        printMatrix(self.matrix2)
+        print("\nSUBRACTION:")
         printMatrix(resultant)
         return resultant    
     
     def multiply(self):
         resultant = np.dot(self.matrix1,self.matrix2)
-        print("MULTIPLICATON:")
+        print("\nArray:1")
+        printMatrix(self.matrix1)
+        print("\nArray:2")
+        printMatrix(self.matrix2)
+        print("\nMULTIPLICATON:")
         printMatrix(resultant)
         return resultant
     
     def division(self):
         resultant = np.divide(self.matrix1,self.matrix2)
-        print("DIVISION:")
+        print("\nArray:1")
+        printMatrix(self.matrix1)
+        print("\nArray:2")
+        printMatrix(self.matrix2)
+        print("\nDIVISION:")
         printMatrix(resultant)
         return resultant
     
     def transpose(self):
         resultant = np.transpose(self.matrix1)
-        print("TRANSPOSE:")
+        print("\nArray:")
+        printMatrix(self.matrix1)
+        print("\nTRANSPOSE:")
         printMatrix(resultant)
         return resultant
     
     def inverse(self):
         try:
             resultant = np.linalg.inv(self.matrix1)
-            print("INVERSE:")
+            print("\nArray:1")
+            printMatrix(self.matrix1)
+            print("\nINVERSE:")
             printMatrix(resultant)
             return resultant
         except Exception as error:
@@ -109,6 +132,8 @@ class MatrixOperator:
 
     def determinant(self):
         try:
+            print("\nArray:1")
+            printMatrix(self.matrix1)
             det = np.linalg.det(self.matrix1)
             det = format(det,".2f")
             print(f"Determinant of the matrix is: {det}")
@@ -118,11 +143,15 @@ class MatrixOperator:
 
     def rank(self):
         rank = np.linalg.matrix_rank(self.matrix1)
+        print("\nArray:1")
+        printMatrix(self.matrix1)
         print("Rank=",rank)
         return rank
     
     def eigenValues(self):
         eigen = np.linalg.eigvals(self.matrix1)
+        print("\nArray:1")
+        printMatrix(self.matrix1)
         print("Eigen values = ",eigen)
         return eigen
 
